@@ -1,0 +1,5 @@
+Django==2.2.1
+djangorestframework==3.9.3
+bokeh==1.1.0
+
+django-redis==4.10.0
