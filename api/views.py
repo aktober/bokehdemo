@@ -3,6 +3,8 @@ import csv
 from bokeh.embed import components
 from bokeh.plotting import figure
 from django.contrib.staticfiles.finders import find
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,6 +14,7 @@ class ColumnsAPI(APIView):
     API for retrieve column names
     """
 
+    @method_decorator(cache_page(60 * 15))
     def get(self, request, format=None):
         path = find('Sampledata.csv')
         columns = []
@@ -28,7 +31,11 @@ class ColumnsAPI(APIView):
 
 
 class GraphAPI(APIView):
+    """
+    API for retrieve <scrip>, <div> content for bokeh
+    """
 
+    @method_decorator(cache_page(60 * 15))
     def get(self, request, format=None):
         x_column = request.GET.get('x')
         y_column = request.GET.get('y')

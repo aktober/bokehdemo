@@ -26,8 +26,8 @@ new Vue({
             }
             return cookieValue;
         },
-        getGraph: function () {
-            console.log('getGraph');
+        getGraphScriptDiv: function () {
+            console.log('getGraphScriptDiv');
             this.loading = true;
             var data = {x: this.xSelected,
                         y: this.ySelected};
@@ -47,8 +47,6 @@ new Vue({
             console.log('getRenderedGraph');
             var self = this;
             var csrftoken = this.getCookie('csrftoken');
-            // console.log('bScript', this.bScript);
-            // console.log('bDiv', this.bDiv);
             var data = {bScript: this.bScript,
                         bDiv: this.bDiv};
             $.ajax({
@@ -74,7 +72,6 @@ new Vue({
     },
     mounted() {
         this.getColumns();
-        // this.getRenderedGraph();
     },
     watch: {
         columns: function (val) {
@@ -82,23 +79,19 @@ new Vue({
             this.ySelected = val.length > 0 ? val[1] : '';
         },
         xSelected: function (val) {
-            console.log('x', val, this.ySelected);
             if (this.ySelected !== '') {
-                this.getGraph();
+                this.getGraphScriptDiv();
             }
         },
         ySelected: function (val) {
-            console.log('y', val, this.xSelected);
             if (this.xSelected !== '') {
-                this.getGraph();
+                this.getGraphScriptDiv();
             }
         },
         htmlPart: function (val) {
-            console.log('new htmlPart');
             $('div#plot').html(this.htmlPart);
         },
         loading: function (val) {
-            console.log('loading', val);
             if (val === false) {
                 this.getRenderedGraph();
             }

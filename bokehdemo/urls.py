@@ -18,6 +18,6 @@ from app import views
 
 urlpatterns = [
     path('', views.IndexPage.as_view(), name='index'),
-    path('ajax/', views.AjaxGraph.as_view()),
+    path('ajax/', views.ajax_graph),
     path('api/', include('api.urls')),
 ]

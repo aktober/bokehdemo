@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:3.2-alpine
+    restart: always
+    ports:
+    - "6379:6379"
+    volumes:
+    - redis_data:/data
+  webapp:
+    restart: always
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+    - "8000:8000"
+    volumes:
+    - .:/code
+    depends_on:
+    - redis
+volumes:
+  redis_data:
